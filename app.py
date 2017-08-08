@@ -1,7 +1,9 @@
 import markdown
 
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, Response
 from os import listdir
+
+import logo
 
 app = Flask(__name__)
 
@@ -11,6 +13,10 @@ WIKI_CONTENT_DIR = 'content/wiki'
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route('/logo.svg')
+def logo_svg():
+    return Response(response=logo.create(), mimetype="image/svg+xml")
 
 def parse_post(post):
     y, m, d, *title = post[:-3].split('-')
